@@ -27,7 +27,7 @@ export const HIGHLIGHTS: string[] = [
   'Step-by-step setup help, no matter your level',
   'Real use cases from people already running OpenClaw daily',
   'Free OpenAI Codex subscription for every participant',
-  'People who'll actually answer your questions without making it weird',
+  "People who'll actually answer your questions without making it weird",
 ]
 
 export const SCHEDULE: ScheduleItem[] = [

@@ -1,11 +1,9 @@
 'use client'
 import { motion } from 'motion/react'
-import { XIcon } from 'lucide-react'
 import { Spotlight } from '@/components/ui/spotlight'
 import { Magnetic } from '@/components/ui/magnetic'
-import Link from 'next/link'
-import { AnimatedBackground } from '@/components/ui/animated-background'
-import { PROJECTS, WORK_EXPERIENCE, EMAIL, SOCIAL_LINKS } from './data'
+import { TextEffect } from '@/components/ui/text-effect'
+import { EVENT, HIGHLIGHTS, SCHEDULE, SPEAKERS } from './data'
 
 const VARIANTS_CONTAINER = {
   hidden: { opacity: 0 },
@@ -26,41 +24,34 @@ const TRANSITION_SECTION = {
   duration: 0.3,
 }
 
-function MagneticSocialLink({
+function MagneticButton({
   children,
   link,
+  primary = false,
 }: {
   children: React.ReactNode
   link: string
+  primary?: boolean
 }) {
   return (
     <Magnetic springOptions={{ bounce: 0 }} intensity={0.3}>
       <a
         href={link}
-        className="group relative inline-flex shrink-0 items-center gap-[1px] rounded-full bg-zinc-100 px-3 py-1.5 text-base text-black transition-colors duration-200 hover:bg-zinc-950 hover:text-zinc-50 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`group relative inline-flex shrink-0 items-center gap-2 rounded-full px-6 py-3 text-base font-medium transition-colors duration-200 ${
+          primary
+            ? 'bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300'
+            : 'bg-zinc-100 text-black hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700'
+        }`}
       >
         {children}
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 15 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-3 w-3"
-        >
-          <path
-            d="M3.64645 11.3536C3.45118 11.1583 3.45118 10.8417 3.64645 10.6465L10.2929 4L6 4C5.72386 4 5.5 3.77614 5.5 3.5C5.5 3.22386 5.72386 3 6 3L11.5 3C11.6326 3 11.7598 3.05268 11.8536 3.14645C11.9473 3.24022 12 3.36739 12 3.5L12 9.00001C12 9.27615 11.7761 9.50001 11.5 9.50001C11.2239 9.50001 11 9.27615 11 9.00001V4.70711L4.35355 11.3536C4.15829 11.5488 3.84171 11.5488 3.64645 11.3536Z"
-            fill="currentColor"
-            fillRule="evenodd"
-            clipRule="evenodd"
-          ></path>
-        </svg>
       </a>
     </Magnetic>
   )
 }
 
-export default function Personal() {
+export default function EventPage() {
   return (
     <motion.main
       className="space-y-24"
@@ -68,112 +59,160 @@ export default function Personal() {
       initial="hidden"
       animate="visible"
     >
-      {/* ✏️ Hero Section — Update with your name and bio */}
+      {/* Hero */}
       <motion.section
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
+        className="text-center"
       >
-        <div className="flex-1">
-          <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            👋 Hi, I&apos;m <strong className="text-zinc-900 dark:text-zinc-100">Your Name</strong>.
-            A short intro about yourself goes here. What do you do? What are you passionate about?
-            Keep it real.
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-medium text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+          </span>
+          Happening today
+        </div>
+        <h1 className="mb-4 text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl">
+          {EVENT.title}
+        </h1>
+        <TextEffect
+          as="p"
+          preset="fade"
+          per="word"
+          className="mb-8 text-xl text-zinc-500 dark:text-zinc-400"
+          delay={0.3}
+        >
+          {EVENT.subtitle}
+        </TextEffect>
+        <div className="mb-8 flex flex-col items-center gap-2 text-zinc-600 dark:text-zinc-400">
+          <p className="text-lg">
+            📅 <strong>{EVENT.date}</strong> · {EVENT.time}
           </p>
+          <p className="text-lg">
+            📍 <strong>{EVENT.venue}</strong>
+          </p>
+          <p className="text-base text-zinc-500">{EVENT.address}</p>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <MagneticButton link={EVENT.lumaLink} primary>
+            Register on Luma →
+          </MagneticButton>
+          <MagneticButton link={`https://maps.google.com/?q=${encodeURIComponent(EVENT.address + ', Hamburg')}`}>
+            Get Directions
+          </MagneticButton>
         </div>
       </motion.section>
 
-      {/* Projects */}
+      {/* What to Expect */}
       <motion.section
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <h3 className="mb-5 text-xl font-medium">Projects</h3>
-        <div className="flex flex-col space-y-2">
-          {PROJECTS.map((project) => (
-            <a
+        <h2 className="mb-6 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">What to Expect</h2>
+        <div className="grid gap-3">
+          {HIGHLIGHTS.map((item, i) => (
+            <div
+              key={i}
               className="relative overflow-hidden rounded-2xl bg-zinc-300/30 p-[1px] dark:bg-zinc-600/30"
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={project.id}
             >
               <Spotlight
                 className="from-zinc-900 via-zinc-800 to-zinc-700 blur-2xl dark:from-zinc-100 dark:via-zinc-200 dark:to-zinc-50"
                 size={64}
               />
               <div className="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-zinc-950">
+                <p className="text-zinc-700 dark:text-zinc-300">
+                  <span className="mr-2">✓</span>
+                  {item}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* Schedule */}
+      <motion.section
+        variants={VARIANTS_SECTION}
+        transition={TRANSITION_SECTION}
+      >
+        <h2 className="mb-6 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">Schedule</h2>
+        <div className="space-y-1">
+          {SCHEDULE.map((item) => (
+            <div
+              key={item.id}
+              className="relative overflow-hidden rounded-2xl bg-zinc-300/30 p-[1px] dark:bg-zinc-600/30"
+            >
+              <Spotlight
+                className="from-zinc-900 via-zinc-800 to-zinc-700 blur-2xl dark:from-zinc-100 dark:via-zinc-200 dark:to-zinc-50"
+                size={64}
+              />
+              <div className="relative flex h-full w-full gap-4 rounded-[15px] bg-white p-4 dark:bg-zinc-950">
+                <span className="shrink-0 font-mono text-sm text-zinc-400 dark:text-zinc-500 pt-0.5">
+                  {item.time}
+                </span>
                 <div>
-                  <h4 className="font-normal dark:text-zinc-100">
-                    {project.name}
-                  </h4>
-                  <p className="text-zinc-500 dark:text-zinc-400">
-                    {project.description}
-                  </p>
+                  <h4 className="font-medium text-zinc-900 dark:text-zinc-100">{item.title}</h4>
+                  {item.description && (
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400">{item.description}</p>
+                  )}
                 </div>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </motion.section>
 
-      {/* Work Experience */}
+      {/* Hosts */}
       <motion.section
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <h3 className="mb-5 text-xl font-medium">Experience</h3>
-        <div className="flex flex-col space-y-2">
-          {WORK_EXPERIENCE.map((job) => (
-            <a
+        <h2 className="mb-6 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">Hosted by {EVENT.hostedBy}</h2>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {SPEAKERS.map((speaker) => (
+            <div
+              key={speaker.id}
               className="relative overflow-hidden rounded-2xl bg-zinc-300/30 p-[1px] dark:bg-zinc-600/30"
-              href={job.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={job.id}
             >
               <Spotlight
                 className="from-zinc-900 via-zinc-800 to-zinc-700 blur-2xl dark:from-zinc-100 dark:via-zinc-200 dark:to-zinc-50"
                 size={64}
               />
-              <div className="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-zinc-950">
-                <div className="relative flex w-full flex-row justify-between">
-                  <div>
-                    <h4 className="font-normal dark:text-zinc-100">
-                      {job.title}
-                    </h4>
-                    <p className="text-zinc-500 dark:text-zinc-400">
-                      {job.company}
-                    </p>
-                  </div>
-                  <p className="text-zinc-600 dark:text-zinc-400">
-                    {job.start} - {job.end}
-                  </p>
-                </div>
+              <div className="relative h-full w-full rounded-[15px] bg-white p-4 text-center dark:bg-zinc-950">
+                <h4 className="font-medium text-zinc-900 dark:text-zinc-100">{speaker.name}</h4>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">{speaker.role}</p>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </motion.section>
 
-      {/* Connect */}
+      {/* About OpenClaw */}
       <motion.section
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <h3 className="mb-5 text-xl font-medium">Connect</h3>
-        <p className="mb-5 text-lg text-zinc-600 dark:text-zinc-400">
-          Feel free to reach out at{' '}
-          <a className="underline dark:text-zinc-300" href={`mailto:${EMAIL}`}>
-            {EMAIL}
-          </a>
+        <h2 className="mb-4 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">What is OpenClaw?</h2>
+        <p className="text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
+          OpenClaw is building the infrastructure for personal AI agents. Think of it as your own AI
+          assistant that connects to the tools you already use — email, calendar, code, messaging —
+          and actually helps you get things done. This is where early adopters and complete beginners
+          sit at the same table and figure out what&apos;s actually worth using.
         </p>
-        <div className="flex flex-wrap items-center justify-start gap-3">
-          {SOCIAL_LINKS.map((link) => (
-            <MagneticSocialLink key={link.label} link={link.link}>
-              {link.label}
-            </MagneticSocialLink>
-          ))}
-        </div>
+      </motion.section>
+
+      {/* Bottom CTA */}
+      <motion.section
+        variants={VARIANTS_SECTION}
+        transition={TRANSITION_SECTION}
+        className="text-center pb-8"
+      >
+        <p className="mb-6 text-xl text-zinc-600 dark:text-zinc-400">
+          Bring your laptop. Bring your curiosity. That&apos;s it.
+        </p>
+        <MagneticButton link={EVENT.lumaLink} primary>
+          Register Now →
+        </MagneticButton>
       </motion.section>
     </motion.main>
   )

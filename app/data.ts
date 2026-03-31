@@ -1,69 +1,82 @@
-type Project = {
+export type Speaker = {
   name: string
-  description: string
-  link: string
-  video?: string
-  image?: string
+  role: string
+  link?: string
   id: string
 }
 
-type WorkExperience = {
-  company: string
+export type ScheduleItem = {
+  time: string
   title: string
-  start: string
-  end: string
-  link: string
+  description?: string
   id: string
 }
 
-type SocialLink = {
-  label: string
-  link: string
+export const EVENT = {
+  title: 'OpenClaw Setup Night',
+  subtitle: 'no AI experience needed',
+  date: 'March 31, 2026',
+  time: '17:30 – 22:30 CEST',
+  venue: 'betahaus | Gänsemarkt',
+  address: 'Gänsemarkt 43, 20354 Hamburg',
+  lumaLink: 'https://luma.com/1du8xbfg',
+  hostedBy: 'AI BEAVERS',
 }
 
-// ✏️ Edit these with your own projects!
-export const PROJECTS: Project[] = [
+export const HIGHLIGHTS: string[] = [
+  'Step-by-step setup help, no matter your level',
+  'Real use cases from people already running OpenClaw daily',
+  'Free OpenAI Codex subscription for every participant',
+  'People who'll actually answer your questions without making it weird',
+]
+
+export const SCHEDULE: ScheduleItem[] = [
   {
-    name: 'My Cool Project',
-    description: 'A short description of what you built.',
-    link: 'https://example.com',
-    id: 'project1',
+    time: '17:30',
+    title: 'Doors Open',
+    description: 'Grab a drink, find a seat, say hi.',
+    id: 'schedule-1',
   },
   {
-    name: 'Another Project',
-    description: 'Something else you're proud of.',
-    link: 'https://example.com',
-    id: 'project2',
+    time: '18:00',
+    title: 'Intro & Setup Kickoff',
+    description: 'Quick overview, then we get OpenClaw running on your machine.',
+    id: 'schedule-2',
+  },
+  {
+    time: '18:45',
+    title: 'Live Demo: Kilo Code',
+    description: 'Watch an AI coding agent build a personal website from scratch.',
+    id: 'schedule-3',
+  },
+  {
+    time: '19:15',
+    title: 'Hands-on Workshop',
+    description: 'Customize your setup, explore use cases, get help from the crew.',
+    id: 'schedule-4',
+  },
+  {
+    time: '20:30',
+    title: 'Open Hang & Networking',
+    description: 'Keep hacking, share what you built, or just chill.',
+    id: 'schedule-5',
   },
 ]
 
-// ✏️ Add your work history!
-export const WORK_EXPERIENCE: WorkExperience[] = [
+export const SPEAKERS: Speaker[] = [
   {
-    company: 'Your Company',
-    title: 'Your Role',
-    start: '2023',
-    end: 'Present',
-    link: 'https://example.com',
-    id: 'work1',
+    name: 'Alexander Zakharov',
+    role: 'AI BEAVERS',
+    id: 'speaker-1',
+  },
+  {
+    name: 'Andreas Wissel',
+    role: 'AI BEAVERS',
+    id: 'speaker-2',
+  },
+  {
+    name: 'Vladyslav Nyzhashchyy',
+    role: 'AI BEAVERS',
+    id: 'speaker-3',
   },
 ]
-
-// ✏️ Add your social links!
-export const SOCIAL_LINKS: SocialLink[] = [
-  {
-    label: 'LinkedIn',
-    link: 'https://linkedin.com/in/yourname',
-  },
-  {
-    label: '𝕏',
-    link: 'https://x.com/yourhandle',
-  },
-  {
-    label: 'GitHub',
-    link: 'https://github.com/yourname',
-  },
-]
-
-// ✏️ Your email address
-export const EMAIL = 'you@example.com'

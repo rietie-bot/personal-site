@@ -11,10 +11,14 @@ export const viewport: Viewport = {
   themeColor: '#ffffff',
 }
 
-// ✏️ Update with your info
 export const metadata: Metadata = {
-  title: 'Your Name — Personal Site',
-  description: 'A short description about yourself.',
+  title: 'OpenClaw Setup Night — Hamburg',
+  description: 'Hands-on setup night for OpenClaw. No AI experience needed. Bring your laptop, get OpenClaw running, and have people in the room who can help you every step of the way.',
+  openGraph: {
+    title: 'OpenClaw Setup Night — Hamburg',
+    description: 'Hands-on setup night for OpenClaw. No AI experience needed.',
+    type: 'website',
+  },
 }
 
 const geist = Geist({
